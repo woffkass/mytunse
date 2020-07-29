@@ -5,7 +5,11 @@ export const videoPlayerInit = () => {
     const videoButtonStop = document.querySelector('.video-button__stop')
     const videoTimePassed = document.querySelector('.video-time__passed')
     const videoProgress = document.querySelector('.video-progress')
+    const videoVolume = document.querySelector('.video-volume')
     const videoTimeTotal = document.querySelector('.video-time__total')
+    const videoFullscreen = document.querySelector('.video-fullscreen')
+    const volumeUp = document.querySelector('.volume-up')
+    const volumeDown = document.querySelector('.volume-down')
 
     const toggleIcon = () => {
         if (videoPlayer.paused) {
@@ -32,6 +36,7 @@ export const videoPlayerInit = () => {
 
     const addZero = n => n < 10 ? '0' + n : n
 
+
     videoPlayer.addEventListener('click', togglePlay)
     videoButtonPlay.addEventListener('click', togglePlay)
     
@@ -55,10 +60,42 @@ export const videoPlayerInit = () => {
         videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}` 
     })
 
-    videoProgress.addEventListener('change', () => {
+    videoProgress.addEventListener('input', () => {
         const duration = videoPlayer.duration
         const value = videoProgress.value
 
         videoPlayer.currentTime = (value * duration) / 100
     })
+
+    videoFullscreen.addEventListener('click', () => {
+        videoPlayer.requestFullscreen()
+    })
+
+    videoVolume.addEventListener('input', () =>{
+        videoPlayer.volume = videoVolume.value / 100
+    })
+
+    volumeUp.addEventListener('click', () => {
+        videoPlayer.volume = 1
+        videoVolume.value = 100
+    })
+
+    volumeDown.addEventListener('click', () => {
+        if (videoPlayer.volume > 0) {
+            volumeLevel = videoPlayer.volume 
+            videoPlayer.volume = 0
+            videoVolume.value = 0
+            volumeDown.classList.remove('fa-volume-down')
+            volumeDown.classList.add('fa-volume-off')
+        } else {
+            videoPlayer.volume = volumeLevel
+            videoVolume.value = volumeLevel * 100
+            volumeDown.classList.remove('fa-volume-off')
+            volumeDown.classList.add('fa-volume-down')
+        }
+    })
+    
+    let volumeLevel = videoPlayer.volume
+    videoVolume.value = videoPlayer.volume * 100
+    
 }
