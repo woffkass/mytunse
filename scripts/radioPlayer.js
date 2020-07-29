@@ -5,6 +5,9 @@ export const radioPlayerInit = () => {
     const radioNavigation = document.querySelector('.radio-navigation')
     const radioItem = document.querySelectorAll('.radio-item')
     const radioStop = document.querySelector('.radio-stop')
+    const radioVolume = document.querySelector('.radio-volume')
+    const radioVolumeDown = document.querySelector('.radio-volume-down')
+    const radioVolumeUp = document.querySelector('.radio-volume-up')
 
     const audio = new Audio()
     audio.type = 'audio/aac'
@@ -44,6 +47,8 @@ export const radioPlayerInit = () => {
         audio.src = target.dataset.radioStantion
         audio.play()
         changeIconPlay()
+        radioVolume.value = audio.volume * 100
+        
     })
 
     radioStop.addEventListener('click', () => {
@@ -54,4 +59,32 @@ export const radioPlayerInit = () => {
         }
         changeIconPlay()
     })
+
+    radioVolume.addEventListener('input', () =>{
+        audio.volume = radioVolume.value / 100
+    })
+
+    radioVolumeUp.addEventListener('click', () => {
+        audio.volume = 1
+        radioVolume.value = 100
+    })
+
+    radioVolumeDown.addEventListener('click', () => {
+        if (audio.volume > 0) {
+            radiovolumeLevel = audio.volume 
+            audio.volume = 0
+            radioVolume.value = 0
+            radioVolumeDown.classList.remove('fa-volume-down')
+            radioVolumeDown.classList.add('fa-volume-off')
+        } else {
+            audio.volume = radiovolumeLevel
+            radioVolume.value = radiovolumeLevel * 100
+            radioVolumeDown.classList.remove('fa-volume-off')
+            radioVolumeDown.classList.add('fa-volume-down')
+        }
+    })
+    
+    let radiovolumeLevel = audio.volume
+    
+    
 }
