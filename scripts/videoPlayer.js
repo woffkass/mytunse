@@ -12,6 +12,7 @@ export const videoPlayerInit = () => {
     const videoFullscreen = document.querySelector('.video-fullscreen')
     const volumeUp = document.querySelector('.volume-up')
     const volumeDown = document.querySelector('.volume-down')
+    const activedVideo = document.querySelector('.player-video')
 
     const toggleIcon = () => {
         if (videoPlayer.paused) {
@@ -57,7 +58,7 @@ export const videoPlayerInit = () => {
         let secondsTotal = Math.floor(duration % 60)
 
         videoTimePassed.textContent = `${addZero(minutePassed)}:${addZero(secondsPassed)}`
-        videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}` 
+        videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}`
     })
 
     videoProgress.addEventListener('input', () => {
@@ -98,4 +99,9 @@ export const videoPlayerInit = () => {
     let volumeLevel = videoPlayer.volume
     videoVolume.value = videoPlayer.volume * 100
     
+    activedVideo.parentElement.addEventListener('click', () => {
+        if (!activedVideo.classList.contains('active')) {
+            stopPlay()
+        }
+    })
 }

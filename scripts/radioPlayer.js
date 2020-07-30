@@ -9,6 +9,8 @@ export const radioPlayerInit = () => {
     const radioVolumeDown = document.querySelector('.radio-volume-down')
     const radioVolumeUp = document.querySelector('.radio-volume-up')
 
+    const activedRadio = document.querySelector('.player-radio')
+
     const audio = new Audio()
     audio.type = 'audio/aac'
 
@@ -86,5 +88,10 @@ export const radioPlayerInit = () => {
     
     let radiovolumeLevel = audio.volume
     
-    
+    activedRadio.parentElement.addEventListener('click', () => {
+        if (!activedRadio.classList.contains('active')) {
+            audio.pause()
+        }
+    })
+   
 }

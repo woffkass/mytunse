@@ -12,6 +12,8 @@ export const musicPlayerInit = () => {
     const audioProgressTiming = document.querySelector('.audio-progress__timing')
     const audioTimeTotal = document.querySelector('.audio-time__total')
 
+    const activedAudio = document.querySelector('.player-audio')
+
     const playList = ['hello', 'flow', 'speed']
 
     let trackIndex = 0
@@ -96,6 +98,10 @@ export const musicPlayerInit = () => {
 
         audioTimePassed.textContent = `${addZero(minutePassed)}:${addZero(secondsPassed)}`
         audioTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}`
+
+        if (!activedAudio.classList.contains('active')) {
+            audioPlayer.pause()
+        }
     })
 
     audioProgress.addEventListener('click', event => {
@@ -103,5 +109,14 @@ export const musicPlayerInit = () => {
         const allWidth = audioProgress.clientWidth
         const progress = (x / allWidth) * audioPlayer.duration
         audioPlayer.currentTime = progress
+    })
+
+    activedAudio.parentElement.addEventListener('click', () => {
+        if (!activedAudio.classList.contains('active')) {
+            audioPlayer.pause()
+            audio.classList.remove('play')
+            audioButtonPlay.classList.add('fa-play')
+            audioButtonPlay.classList.remove('fa-pause')
+        }
     })
 }
